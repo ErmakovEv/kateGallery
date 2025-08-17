@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 
 import './globals.css';
 import { kablammo, inter, balsamiqSans } from './fonts';
+import { Navbar } from './components/navbar';
 
 export const metadata: Metadata = {
   title: 'Kate-gallery',
@@ -18,6 +19,7 @@ export default function RootLayout({
       <body
         className={`${balsamiqSans.variable} ${inter.variable} ${kablammo.variable} antialiased`}
       >
+        <Navbar />
         {children}
       </body>
     </html>

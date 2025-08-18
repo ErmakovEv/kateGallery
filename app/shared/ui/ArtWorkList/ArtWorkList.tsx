@@ -1,13 +1,14 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { TImageCard } from './model';
+
 import Image from 'next/image';
+import { TArtWork } from '../../types';
 
 const PAGE_SIZE = 5;
 
-export function ImagesList() {
-  const [images, setImages] = useState<TImageCard[]>([]);
+export function ArtWorkList() {
+  const [images, setImages] = useState<TArtWork[]>([]);
   const [page, setPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -16,26 +17,11 @@ export function ImagesList() {
   const fetchPhotos = async (pageNumber: number) => {
     setIsLoading(true);
 
-    const newPhotos = Array.from(
-      { length: pageNumber === 3 ? PAGE_SIZE - 1 : PAGE_SIZE },
-      (_, i) => {
-        const index = pageNumber * PAGE_SIZE + i;
-        return {
-          id: `${index}`,
-          src: '/card.jpg',
-          alt: `Photo ${index}`,
-          name: `Фото №${index + 1}`,
-          description: 'Описание фотографии, хобби, эмоции и всё такое.',
-          createdAt: new Date(),
-          category: 'Рисунки',
-        };
-      }
-    );
-
-    await new Promise((res) => setTimeout(res, 500));
-
-    setImages((prev) => [...prev, ...newPhotos]);
-    setHasMore(newPhotos.length >= PAGE_SIZE);
+    const res = await fetch(`/artWork?page=${pageNumber}&limit=${PAGE_SIZE}`);
+    if (!res.ok) throw new Error('Ошибка при получении данных');
+    const data = await res.json();
+    setImages((prev) => [...prev, ...data]);
+    setHasMore(data.length >= PAGE_SIZE);
     setIsLoading(false);
   };
 
@@ -71,8 +57,8 @@ export function ImagesList() {
         >
           <div className="w-full">
             <Image
-              src={item.src}
-              alt={item.alt}
+              src={item.imageUrls[0]}
+              alt={item.description || 'рисунок'}
               className="object-cover"
               width={1000}
               height={600}

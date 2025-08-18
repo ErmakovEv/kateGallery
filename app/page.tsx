@@ -1,10 +1,10 @@
-import { ImagesList } from './shared/ui/ImagesList/ImagesList';
+import { ArtWorkList } from './shared/ui/ArtWorkList/ArtWorkList';
 
 export default function Gallery() {
   return (
     <main className="bg-cotton-200">
       <div className="max-container">
-        <ImagesList />
+        <ArtWorkList />
       </div>
     </main>
   );

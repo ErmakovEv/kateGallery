@@ -1,0 +1,9 @@
+import postgres from 'postgres';
+
+const sql = postgres(process.env.DATABASE_URL!, {
+  transform: {
+    column: postgres.toCamel,
+  },
+});
+
+export default sql;

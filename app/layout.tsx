@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 import './globals.css';
 import { kablammo, inter, balsamiqSans } from './fonts';
-import { Navbar } from './components/navbar';
+import { Navbar } from './shared/ui/navbar';
 
 export const metadata: Metadata = {
   title: 'Kate-gallery',

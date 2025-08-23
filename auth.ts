@@ -2,26 +2,8 @@ import NextAuth from 'next-auth';
 import { authConfig } from './auth.config';
 import Credentials from 'next-auth/providers/credentials';
 import { z } from 'zod';
-import { TUser } from './app/shared/types';
 import bcrypt from 'bcrypt';
-import sql from './app/shared/lib/db';
-
-// email: 'user@test.ru',
-//         password: hashSync('111111', 10),
-
-async function getUser(email: string) {
-  try {
-    console.log('email', email);
-    const user = await sql<
-      TUser[]
-    >`SELECT * FROM "User" WHERE "email"=${email}`;
-    console.log('user', user);
-    return user[0];
-  } catch (error) {
-    console.error('Failed to fetch user:', error);
-    throw new Error('Failed to fetch user.');
-  }
-}
+import { getUser } from './app/shared/lib/actions';
 
 export const { auth, signIn, signOut } = NextAuth({
   ...authConfig,

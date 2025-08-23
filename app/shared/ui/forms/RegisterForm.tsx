@@ -2,21 +2,32 @@
 
 import { useSearchParams } from 'next/navigation';
 import { useActionState } from 'react';
-import { authenticate } from '../../lib/actions';
+import { registartion } from '../../lib/actions';
 
-export default function LoginForm() {
+export default function RegisterForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/admin';
 
   const [errorMessage, formAction, isPending] = useActionState(
-    authenticate,
+    registartion,
     undefined
   );
 
   return (
     <form action={formAction}>
       <div className="w-full ">
-        <div className="flex flex-col items-center justify-center bg-marshmallow-200 padding border-10 border-marshmallow-400 rounded-2xl">
+        <div className="flex flex-col items-center justify-center">
+          <div>
+            <label htmlFor="name">Имя</label>
+            <div className="relative">
+              <input
+                type="text"
+                name="name"
+                required
+                placeholder="Введите имя"
+              />
+            </div>
+          </div>
           <div>
             <label htmlFor="email">E-Mail</label>
             <div className="relative">
@@ -25,7 +36,6 @@ export default function LoginForm() {
                 name="email"
                 required
                 placeholder="Введите email"
-                className="border-b border-marshmallow-400"
               />
             </div>
           </div>
@@ -37,16 +47,12 @@ export default function LoginForm() {
                 name="password"
                 required
                 placeholder="Введите пароль"
-                className="border-b border-marshmallow-400"
               />
             </div>
           </div>
           <input type="hidden" name="redirectTo" value={callbackUrl} />
-          <button
-            className="mt-4 w-full bg-marshmallow-400 p-2 rounded-2xl"
-            aria-disabled={isPending}
-          >
-            Войти
+          <button className="mt-4 w-full" aria-disabled={isPending}>
+            Зарегистрироваться
           </button>
           <div
             className="flex h-8 items-end space-x-1"

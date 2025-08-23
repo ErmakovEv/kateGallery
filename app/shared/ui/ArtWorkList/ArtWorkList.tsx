@@ -49,12 +49,9 @@ export function ArtWorkList() {
   }, [page]);
 
   return (
-    <div className="flex flex-col gap-4 justify-center border border-black p-4">
+    <div className="flex flex-col gap-4 justify-center ">
       {images.map((item) => (
-        <div
-          key={item.id}
-          className="flex flex-col lg:flex-row gap-4 border border-black p-4"
-        >
+        <div key={item.id} className="flex flex-col lg:flex-row gap-4  p-4">
           <div className="w-full">
             <Image
               src={item.imageUrls[0]}

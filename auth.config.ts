@@ -17,6 +17,23 @@ export const authConfig = {
       }
       return true;
     },
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.name = user.name;
+        token.avatarUrl = user.avatarUrl;
+      }
+      return token;
+    },
+
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.id as string;
+        session.user.name = token.name as string;
+        session.user.avatarUrl = token.avatarUrl as string;
+      }
+      return session;
+    },
   },
   providers: [],
 } satisfies NextAuthConfig;

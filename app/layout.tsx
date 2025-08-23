@@ -19,8 +19,10 @@ export default function RootLayout({
       <body
         className={`${balsamiqSans.variable} ${inter.variable} ${kablammo.variable} antialiased`}
       >
-        <Navbar />
-        {children}
+        <div className="bg-cotton-200">
+          <Navbar />
+          {children}
+        </div>
       </body>
     </html>
   );

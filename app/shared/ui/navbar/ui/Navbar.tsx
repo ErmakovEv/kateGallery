@@ -1,14 +1,33 @@
+import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
+import { auth } from '@/auth';
+import ButtonNavbar from '../../ButtonNavbar/ButtonNavbar';
+import Avatar from '../../Avatar/Avatar';
 
-export function Navbar() {
+export async function Navbar() {
+  const session = await auth();
+
   return (
-    <div className="flex justify-between items-center px-4 ">
-      <div className="border-2 border-marshmallow-300 rounded-full w-[50px] h-[50px] bg-cotton-500 flex justify-center items-center">
-        Logo
+    <div className="flex justify-between items-center p-4 ">
+      <div className="flex justify-center items-center rounded-full shadow-lg transform hover:-translate-y-1 transition-all duration-300 custom-ring">
+        <Link href={'/'}>
+          <Image
+            src="/logo2.svg"
+            width={100}
+            height={100}
+            alt="logo"
+            className=""
+          />
+        </Link>
       </div>
-      <h3 className="text-3xl font-kablammo text-cotton-500">Катин домик</h3>
-      <div className="border-2 border-marshmallow-300 rounded-full w-[50px] h-[50px] bg-cotton-500 flex justify-center items-center">
-        |||
+      <h3 className="text-3xl font-kablammo text-cotton-500">
+        💖 Катин домик 💖
+      </h3>
+      <div className="flex justify-center items-center">
+        <Link href={'/admin'}>
+          {session?.user ? <Avatar /> : <ButtonNavbar />}
+        </Link>
       </div>
     </div>
   );

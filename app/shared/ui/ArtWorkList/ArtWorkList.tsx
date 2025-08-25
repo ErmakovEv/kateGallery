@@ -34,7 +34,7 @@ export function ArtWorkList() {
           setPage((prev) => prev + 1);
         }
       },
-      { threshold: 1.0 }
+      { threshold: 1.0, rootMargin: '100px' }
     );
 
     if (loaderRef.current) observer.observe(loaderRef.current);

@@ -21,7 +21,7 @@ export async function GET(req: Request) {
         (SELECT COUNT(*) FROM "Comment" cm WHERE cm."workId" = a.id) AS comments_count
       FROM "ArtWork" a
       JOIN "Category" c ON a."categoryId" = c.id
-      ORDER BY a."createdAt" DESC
+      ORDER BY a."id" ASC
       LIMIT ${limit} OFFSET ${page * limit}
     `;
 

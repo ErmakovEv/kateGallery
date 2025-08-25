@@ -9,6 +9,14 @@ export type TArtWork = {
   year?: number;
 };
 
+export type TModifyArtWorks = {
+  likesCount?: number;
+  commentsCount?: number;
+  categoryName?: string;
+};
+
+export type TFullArtWork = TArtWork & TModifyArtWorks;
+
 export enum EUserRole {
   user = 'USER',
   admin = 'ADMIN',

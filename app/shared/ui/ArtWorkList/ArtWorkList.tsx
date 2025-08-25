@@ -2,13 +2,13 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 
-import Image from 'next/image';
-import { TArtWork } from '../../types';
+import { TFullArtWork } from '../../types';
+import { ArtWorkCard } from '../ArtWorkCard/ui/ArtWorkCard';
 
 const PAGE_SIZE = 5;
 
 export function ArtWorkList() {
-  const [images, setImages] = useState<TArtWork[]>([]);
+  const [images, setImages] = useState<TFullArtWork[]>([]);
   const [page, setPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -20,6 +20,7 @@ export function ArtWorkList() {
     const res = await fetch(`/artWork?page=${pageNumber}&limit=${PAGE_SIZE}`);
     if (!res.ok) throw new Error('Ошибка при получении данных');
     const data = await res.json();
+    console.log('data', data);
     setImages((prev) => [...prev, ...data]);
     setHasMore(data.length >= PAGE_SIZE);
     setIsLoading(false);
@@ -51,24 +52,18 @@ export function ArtWorkList() {
   return (
     <div className="flex flex-col gap-4 justify-center ">
       {images.map((item) => (
-        <div key={item.id} className="flex flex-col lg:flex-row gap-4  p-4">
-          <div className="w-full">
-            <Image
-              src={item.imageUrls[0]}
-              alt={item.description || 'рисунок'}
-              className="object-cover"
-              width={1000}
-              height={600}
-            />
-          </div>
-
-          <div className="w-full lg:w-1/3 p-4">
-            <div className="lg:sticky lg:top-10">
-              <p className="text-xl text-white-400">{item.name}</p>
-              <p className="text-marshmallow-400">{item.description}</p>
-            </div>
-          </div>
-        </div>
+        <ArtWorkCard
+          key={item.id}
+          id={item.id}
+          imageUrl={item.imageUrls.length ? item.imageUrls[0] : null}
+          description={item.description}
+          name={item.name}
+          likesCount={item.likesCount}
+          commentsCount={item.commentsCount}
+          categoryName={item.categoryName}
+          year={item.year}
+          createdAt={item.createdAt}
+        />
       ))}
 
       {hasMore && (

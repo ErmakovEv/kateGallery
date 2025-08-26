@@ -1,6 +1,6 @@
 'use server';
 
-import { signIn } from '@/auth';
+import { auth, signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 
 import sql from '@/app/shared/lib/db';
@@ -65,7 +65,6 @@ export async function registartion(
   formData: FormData
 ) {
   try {
-    console.log('1', formData);
     const parsedCredentials = z
       .object({
         email: z.string().email(),
@@ -77,9 +76,9 @@ export async function registartion(
         password: formData.get('password'),
         name: formData.get('name'),
       });
-    console.log('parsedCredential', parsedCredentials);
+
     if (!parsedCredentials.success) return;
-    console.log('2');
+
     const { name, email, password } = parsedCredentials.data;
     const user = await getUser(email);
     if (user) {
@@ -105,3 +104,26 @@ export async function registartion(
     throw error;
   }
 }
+
+export const likeAddHandler = async (workId: number) => {
+  const session = await auth();
+  if (!session?.user) return;
+
+  await sql`INSERT INTO "Like" ("authorId", "workId","createdAt", "updatedAt")
+  VALUES (
+    ${session.user.id},
+    ${workId},
+    NOW(),
+    NOW()
+  )`;
+};
+
+export const likeDelHandler = async (workId: number) => {
+  const session = await auth();
+  if (!session?.user) return;
+
+  await sql`
+    DELETE FROM "Like"
+    WHERE "authorId" = ${session.user.id} AND "workId" = ${workId}
+  `;
+};

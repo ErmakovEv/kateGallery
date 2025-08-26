@@ -4,10 +4,11 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { TFullArtWork } from '../../types';
 import { ArtWorkCard } from '../ArtWorkCard/ui/ArtWorkCard';
+import { Session } from 'next-auth';
 
 const PAGE_SIZE = 5;
 
-export function ArtWorkList() {
+export function ArtWorkList({ session }: { session: Session | null }) {
   const [images, setImages] = useState<TFullArtWork[]>([]);
   const [page, setPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -20,7 +21,7 @@ export function ArtWorkList() {
     const res = await fetch(`/artWork?page=${pageNumber}&limit=${PAGE_SIZE}`);
     if (!res.ok) throw new Error('Ошибка при получении данных');
     const data = await res.json();
-    console.log('data', data);
+
     setImages((prev) => [...prev, ...data]);
     setHasMore(data.length >= PAGE_SIZE);
     setIsLoading(false);
@@ -63,6 +64,7 @@ export function ArtWorkList() {
           categoryName={item.categoryName}
           year={item.year}
           createdAt={item.createdAt}
+          session={session}
         />
       ))}
 

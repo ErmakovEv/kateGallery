@@ -1,10 +1,12 @@
+import { auth } from '@/auth';
 import { ArtWorkList } from './shared/ui/ArtWorkList/ArtWorkList';
 
-export default function Gallery() {
+export default async function Gallery() {
+  const session = await auth();
   return (
     <main>
       <div className="max-container">
-        <ArtWorkList />
+        <ArtWorkList session={session} />
       </div>
     </main>
   );

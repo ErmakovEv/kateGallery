@@ -1,12 +1,11 @@
 'use client';
 
 import { Session } from 'next-auth';
-import { MessageSquareHeart, Heart } from 'lucide-react';
+import { MessageSquareHeart } from 'lucide-react';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
-import { likeAddHandler, likeDelHandler } from '@/app/shared/lib/actions';
+import { ButtonLike } from '../../ButtonLike';
 
 export type TArtWorkCardProps = {
   id: number;
@@ -33,9 +32,6 @@ export function ArtWorkCard(props: TArtWorkCardProps) {
     session,
   } = props;
 
-  const [isLiked, setIsLiked] = useState(false);
-  const [likes, setLikes] = useState(likesCount ? +likesCount : 0);
-
   const params = new URLSearchParams({
     imageUrl: `${imageUrl}`,
     name: name,
@@ -61,42 +57,7 @@ export function ArtWorkCard(props: TArtWorkCardProps) {
           <p className="text-marshmallow-400">{description}</p>
           <p className="text-marshmallow-400">{categoryName}</p>
           <div className="flex gap-3">
-            <div className="flex gap-1">
-              <button
-                onClick={async () => {
-                  if (isLiked) {
-                    await likeDelHandler(id);
-                    setLikes((prev) => prev - 1);
-                  } else {
-                    await likeAddHandler(id);
-                    setLikes((prev) => prev + 1);
-                  }
-
-                  setIsLiked((prev) => !prev);
-                }}
-                disabled={!session?.user}
-                className={`
-    p-2 rounded-full transition-all duration-200
-    ${isLiked ? 'bg-red-100 hover:bg-red-200' : 'bg-gray-100 hover:bg-gray-200'}
-    ${
-      !session?.user
-        ? 'opacity-50 cursor-not-allowed'
-        : 'cursor-pointer hover:scale-110'
-    }
-    focus:outline-none focus:ring-2 focus:ring-red-500
-  `}
-              >
-                <Heart
-                  size={64}
-                  className={`
-      transition-colors duration-200
-      ${isLiked ? 'text-red-600 fill-current' : 'text-red-600 opacity-60'}
-    `}
-                  fill={isLiked ? 'currentColor' : 'none'}
-                />
-              </button>
-              <span>{likes}</span>
-            </div>
+            <ButtonLike workId={id} session={session} likesCount={likesCount} />
             <div className="flex gap-1">
               <MessageSquareHeart size={64} color="#b0a0a0" />
               <span>{commentsCount}</span>

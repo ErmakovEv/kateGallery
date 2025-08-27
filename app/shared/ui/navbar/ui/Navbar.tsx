@@ -3,7 +3,6 @@ import Link from 'next/link';
 import React from 'react';
 import { auth } from '@/auth';
 import ButtonNavbar from '../../ButtonNavbar/ButtonNavbar';
-import Avatar from '../../Avatar/Avatar';
 
 export async function Navbar() {
   const session = await auth();
@@ -25,9 +24,7 @@ export async function Navbar() {
         💖 Катин домик 💖
       </h3>
       <div className="flex justify-center items-center">
-        <Link href={'/admin'}>
-          {session?.user ? <Avatar /> : <ButtonNavbar />}
-        </Link>
+        <ButtonNavbar session={session} />
       </div>
     </div>
   );

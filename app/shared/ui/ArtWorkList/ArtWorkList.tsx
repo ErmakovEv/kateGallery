@@ -3,8 +3,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import { TFullArtWork } from '../../types';
-import { ArtWorkCard } from '../ArtWorkCard/ui/ArtWorkCard';
+
 import { Session } from 'next-auth';
+import { ArtWorkCard } from '../ArtWorkCard';
 
 const PAGE_SIZE = 5;
 

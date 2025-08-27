@@ -1,6 +1,6 @@
 'use server';
 
-import { auth, signIn } from '@/auth';
+import { auth, signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
 
 import sql from '@/app/shared/lib/db';
@@ -59,6 +59,11 @@ export async function authenticate(
     throw error;
   }
 }
+
+export const logoutHandler = async () => {
+  await signOut({ redirect: true, redirectTo: '/' });
+  // window.location.href = '/';
+};
 
 export async function registartion(
   prevState: string | undefined,

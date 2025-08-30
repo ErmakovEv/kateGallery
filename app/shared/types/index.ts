@@ -36,3 +36,14 @@ export type TUser = {
   Likes?: unknown;
   VerificationCodes?: unknown;
 };
+
+export type TComment = {
+  id: string;
+  text: string;
+  authorId: string;
+  workId: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type TFullComment = TComment & Pick<TUser, 'fullName' | 'avatarUrl'>;

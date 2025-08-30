@@ -1,3 +1,5 @@
+'use client';
+
 import { likeAddHandler, likeDelHandler } from '@/app/shared/lib/actions';
 import { Heart } from 'lucide-react';
 import { Session } from 'next-auth';
@@ -7,10 +9,14 @@ export const ButtonLike = ({
   workId,
   likesCount,
   session,
+  size = 64,
+  hasCount = true,
 }: {
   workId: number;
   session: Session | null;
   likesCount?: number;
+  size?: number;
+  hasCount?: boolean;
 }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [likes, setLikes] = useState(likesCount ? +likesCount : 0);
@@ -42,14 +48,14 @@ export const ButtonLike = ({
         }`}
       >
         <Heart
-          size={64}
+          size={size}
           className={`transition-colors duration-200 ${
             isLiked ? 'text-red-600 fill-current' : 'text-red-600 opacity-60'
           }`}
           fill={isLiked ? 'currentColor' : 'none'}
         />
       </button>
-      <span>{likes}</span>
+      {hasCount && <span>{likes}</span>}
     </div>
   );
 };

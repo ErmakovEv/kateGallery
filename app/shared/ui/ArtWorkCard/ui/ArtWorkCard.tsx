@@ -35,6 +35,10 @@ export function ArtWorkCard(props: TArtWorkCardProps) {
   const params = new URLSearchParams({
     imageUrl: `${imageUrl}`,
     name: name,
+    description: description || '',
+    categoryName: categoryName || '',
+    likesCount: `${likesCount || 0}`,
+    id: `${id}`,
   });
 
   return (

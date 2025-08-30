@@ -4,7 +4,7 @@ import { auth, signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
 
 import sql from '@/app/shared/lib/db';
-import { TUser } from '../types';
+import { TComment, TUser } from '../types';
 import z from 'zod';
 import bcrypt from 'bcrypt';
 import { redirect } from 'next/navigation';
@@ -59,10 +59,42 @@ export async function authenticate(
     throw error;
   }
 }
+export const sendComment = async (
+  prevState: string | undefined,
+  formData: FormData
+): Promise<string | undefined> => {
+  try {
+    const parsed = z
+      .object({
+        comment: z.string().min(1),
+        authorId: z.string(),
+        workId: z.string(),
+      })
+      .safeParse({
+        comment: formData.get('comment'),
+        authorId: formData.get('authorId'),
+        workId: formData.get('workId'),
+      });
+
+    if (!parsed.success) return 'Не удалось сохранить комментарий1';
+
+    const { comment, authorId, workId } = parsed.data;
+
+    await sql<TComment[]>`
+      INSERT INTO "Comment" ("text", "authorId", "workId", "createdAt", "updatedAt")
+      VALUES (${comment}, ${+authorId}, ${+workId}, NOW(), NOW())
+      RETURNING *
+    `;
+
+    return 'Комментарий успешно сохранен';
+  } catch (error) {
+    console.error(error);
+    return 'Не удалось сохранить комментарий2';
+  }
+};
 
 export const logoutHandler = async () => {
   await signOut({ redirect: true, redirectTo: '/' });
-  // window.location.href = '/';
 };
 
 export async function registartion(

@@ -25,6 +25,7 @@ export const { auth, signIn, signOut } = NextAuth({
               email: user.email,
               name: user.fullName,
               avatarUrl: user.avatarUrl,
+              role: user.role,
               // Добавьте другие поля
             };
           }

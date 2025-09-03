@@ -1,10 +1,35 @@
+import { auth } from '@/auth';
 import LoginForm from '../shared/ui/forms/LoginForm';
 import { Suspense } from 'react';
+import { Manager } from '../shared/ui/Manager';
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const session = await auth();
+
+  const isAdmin = session?.user.role === 'ADMIN';
+
   return (
-    <main className="flex flex-col items-center justify-center h-screen">
-      Админ панель
+    <main>
+      <div className="max-container min-h-screen">
+        <div>
+          <div className="flex flex-col items-center gap-4 p-4 w-full bg-block">
+            <h1 className="text-2xl mb-4">Панель администратора</h1>
+
+            <AdminStats />
+
+            {isAdmin && (
+              <div className="mt-6">
+                <h2 className="text-xl mb-2">Управление работами</h2>
+                <Manager />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </main>
   );
 }
+
+const AdminStats = () => {
+  return <p>Статистика</p>;
+};

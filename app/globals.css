@@ -11,10 +11,6 @@ body {
   font-family: var(--font-balsamiq-sans), sans-serif;
 }
 
-.max-container {
-  @apply max-w-[1440px] mx-auto;
-}
-
 @theme {
   /* font-size */
   --text-xs: 12px;
@@ -100,6 +96,60 @@ body {
 /* .input {
   @apply sm:flex-1 max-sm:w-full text-base leading-normal text-slate-gray pl-5 max-sm:p-5 outline-none sm:border-none border max-sm:border-slate-gray max-sm:rounded-full;
 } */
+
+.block-bg {
+  @apply bg-marshmallow-200/80 shadow-lg;
+}
+
+.max-container {
+  @apply max-w-[1440px] mx-auto;
+}
+
+.btn {
+  @apply px-2 py-4 flex items-center justify-center gap-2 rounded-2xl cursor-pointer font-montserrat font-bold transition-all duration-300 ease-in-out relative;
+}
+
+.btn.small {
+  @apply px-1 py-2 text-sm;
+}
+
+.btn.large {
+  @apply px-4 py-8 text-2xl;
+}
+
+.btn.secondary {
+  @apply bg-sky-400 text-white-400 shadow-xl;
+}
+
+.btn.secondary:hover {
+  @apply bg-sky-300 translate-y-[2px];
+}
+
+.btn.primary {
+  @apply bg-marshmallow-400 text-black shadow-xl;
+}
+
+.btn.primary:hover {
+  @apply bg-marshmallow-300 translate-y-[2px];
+}
+
+.btn:active {
+  @apply translate-y-[0];
+}
+
+.btn:disabled {
+  @apply opacity-60 cursor-none transform-none;
+}
+
+.icon-size-small {
+  @apply h-4 w-4;
+}
+.icon-size-medium {
+  @apply h-6 w-6;
+}
+.icon-size-large {
+  @apply h-8 w-8;
+}
 
 @utility padding {
   @apply sm:px-16 px-8 sm:py-24 py-12;

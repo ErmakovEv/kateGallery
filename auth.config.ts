@@ -22,6 +22,7 @@ export const authConfig = {
         token.id = user.id;
         token.name = user.name;
         token.avatarUrl = user.avatarUrl;
+        token.role = user.role;
       }
       return token;
     },
@@ -31,6 +32,7 @@ export const authConfig = {
         session.user.id = token.id as string;
         session.user.name = token.name as string;
         session.user.avatarUrl = token.avatarUrl as string;
+        session.user.role = token.role as string;
       }
       return session;
     },

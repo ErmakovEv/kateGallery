@@ -19,9 +19,12 @@ export default function RootLayout({
       <body
         className={`${balsamiqSans.variable} ${inter.variable} ${kablammo.variable} antialiased`}
       >
-        <div className="bg-cotton-200">
-          <Navbar />
-          {children}
+        <div className="relative">
+          <div className="absolute inset-0 bg-[url('/bg3.jpg')] bg-repeat bg-[length:50%] bg-top opacity-80"></div>
+          <div className="relative z-10">
+            <Navbar />
+            {children}
+          </div>
         </div>
       </body>
     </html>

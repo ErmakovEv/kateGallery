@@ -1,4 +1,5 @@
 'use server';
+import { put } from '@vercel/blob';
 
 import { auth, signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
@@ -163,4 +164,38 @@ export const likeDelHandler = async (workId: number) => {
     DELETE FROM "Like"
     WHERE "authorId" = ${session.user.id} AND "workId" = ${workId}
   `;
+};
+
+export const createWork = async (formData: FormData) => {
+  try {
+    const parsedData = z
+      .object({
+        name: z.string(),
+        year: z.string(),
+        categoryId: z.string(),
+        description: z.string(),
+        image: z.file(),
+      })
+      .safeParse({
+        name: formData.get('name'),
+        year: formData.get('year'),
+        categoryId: formData.get('categoryId'),
+        description: formData.get('description'),
+        images: formData.get('images'),
+      });
+
+    if (!parsedData.data?.name || !parsedData.data.categoryId) {
+      throw new Error('Name and category are required');
+    }
+
+    const imageUrls: string[] = [];
+
+    const blob = await put(parsedData.data.image.name, parsedData.data.image, {
+      access: 'public',
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    });
+    imageUrls.push(blob.url);
+  } catch (error) {
+    throw error;
+  }
 };

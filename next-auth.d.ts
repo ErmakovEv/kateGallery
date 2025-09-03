@@ -5,6 +5,7 @@ declare module 'next-auth' {
     id: string;
     name?: string;
     avatarUrl?: string; // Добавляем поле avatarUrl
+    role?: string;
   }
 
   interface Session {
@@ -13,6 +14,7 @@ declare module 'next-auth' {
       name?: string;
       email: string;
       avatarUrl?: string; // Добавляем поле avatarUrl
+      role?: string;
     } & DefaultSession['user'];
   }
 }
@@ -22,5 +24,6 @@ declare module 'next-auth/jwt' {
     id: string;
     name?: string;
     avatarUrl?: string; // Добавляем поле avatarUrl
+    role?: string;
   }
 }

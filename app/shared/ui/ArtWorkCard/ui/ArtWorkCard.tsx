@@ -42,7 +42,7 @@ export function ArtWorkCard(props: TArtWorkCardProps) {
   });
 
   return (
-    <div className="flex flex-col lg:flex-row gap-4  p-4">
+    <div className="flex flex-col lg:flex-row justify-center p-4">
       <div className="w-full">
         <Image
           src={imageUrl || '/card.jpg'}
@@ -53,7 +53,7 @@ export function ArtWorkCard(props: TArtWorkCardProps) {
         />
       </div>
 
-      <div className="w-full lg:w-1/3 p-4">
+      <div className="w-full lg:w-1/3 p-4 block-bg ">
         <div className="lg:sticky lg:top-10">
           <Link href={`/${id}?${params.toString()}`}>
             <p className="text-xl text-white-400">{name}</p>

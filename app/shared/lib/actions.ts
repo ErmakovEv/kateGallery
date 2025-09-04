@@ -5,7 +5,7 @@ import { auth, signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
 
 import sql from '@/app/shared/lib/db';
-import { TComment, TUser } from '../types';
+import { TArtWork, TComment, TUser } from '../types';
 import z from 'zod';
 import bcrypt from 'bcrypt';
 import { redirect } from 'next/navigation';
@@ -171,31 +171,45 @@ export const createWork = async (formData: FormData) => {
     const parsedData = z
       .object({
         name: z.string(),
-        year: z.string(),
-        categoryId: z.string(),
+        year: z.coerce.number(),
+        categoryId: z.coerce.number(),
         description: z.string(),
-        image: z.file(),
+        images: z.any(),
       })
       .safeParse({
         name: formData.get('name'),
         year: formData.get('year'),
         categoryId: formData.get('categoryId'),
         description: formData.get('description'),
-        images: formData.get('images'),
+        images: formData.getAll('images'),
       });
 
-    if (!parsedData.data?.name || !parsedData.data.categoryId) {
-      throw new Error('Name and category are required');
+    if (!parsedData.success) {
+      throw new Error('Ошибка валидации формы');
     }
+
+    const { name, year, categoryId, description, images } = parsedData.data;
 
     const imageUrls: string[] = [];
 
-    const blob = await put(parsedData.data.image.name, parsedData.data.image, {
-      access: 'public',
-      token: process.env.BLOB_READ_WRITE_TOKEN,
-    });
-    imageUrls.push(blob.url);
+    for (const file of images as File[]) {
+      const blob = await put(file.name, file, { access: 'public' });
+      imageUrls.push(blob.url);
+    }
+
+    const newWork = await sql`
+      INSERT INTO "ArtWork" ("imageUrls", "categoryId", "description", "name", "year", "createdAt", "updatedAt")
+      VALUES (${imageUrls}, ${categoryId}, ${description}, ${name}, ${year}, NOW(), NOW())
+      RETURNING *;
+    `;
+
+    return {
+      success: true,
+      data: newWork,
+      message: 'Работа успешно сохранена',
+    };
   } catch (error) {
+    console.error('createWork error', error);
     throw error;
   }
 };

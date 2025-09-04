@@ -24,23 +24,8 @@ export default function ManagerForm() {
     }
   };
 
-  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-
-  //   const formData = new FormData(e.currentTarget);
-
-  //   const files = fileInputRef.current?.files;
-  //   if (files) {
-  //     for (const file of files) {
-  //       formData.append('images', file);
-  //     }
-  //   }
-
-  //   formAction(formData); //Ожидалось аргументов: 0, получено: 1.
-  // };
-
   return (
-    <form action={formAction} encType="multipart/form-data">
+    <form action={formAction} encType={'multipart/form-data'}>
       <div className="w-full ">
         <div className="flex flex-col items-center justify-center bg-marshmallow-200 padding border-10 border-marshmallow-400 rounded-2xl">
           <div>
@@ -95,8 +80,6 @@ export default function ManagerForm() {
               required
               className="w-full p-2 border rounded"
             />
-
-            {/* Превью фотографий */}
             {previewUrl && (
               <div className="p-4 flex justify-center items-center border-amber-100 border-2">
                 <Image
@@ -110,11 +93,8 @@ export default function ManagerForm() {
             )}
           </div>
         </div>
-        <button
-          className="mt-4 w-full bg-marshmallow-400 p-2 rounded-2xl"
-          // aria-disabled={isPending}
-        >
-          Войти
+        <button className="mt-4 w-full bg-marshmallow-400 p-2 rounded-2xl">
+          Сохранить
         </button>
         <div
           className="flex h-8 items-end space-x-1"

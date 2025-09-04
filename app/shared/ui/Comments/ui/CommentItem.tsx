@@ -1,4 +1,4 @@
-import { formatDate } from '@/app/shared/lib/common';
+import { formatLongDate } from '@/app/shared/lib/common';
 import { TFullComment } from '@/app/shared/types';
 import Image from 'next/image';
 
@@ -17,7 +17,7 @@ export const CommentItem = async (props: TFullComment) => {
           />
           <p className="font-bold">{fullName}</p>
         </div>
-        <p className="text-gray-400">{formatDate(createdAt)}</p>
+        <p className="text-gray-400">{formatLongDate(createdAt)}</p>
       </div>
       <div>
         <p>{text}</p>

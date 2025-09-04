@@ -46,4 +46,22 @@ export type TComment = {
   updatedAt: Date;
 };
 
-export type TFullComment = TComment & Pick<TUser, 'fullName' | 'avatarUrl'>;
+export type TFullComment = TComment &
+  Pick<TUser, 'fullName' | 'avatarUrl'> &
+  Pick<TArtWork, 'id'>;
+
+export type TFullCommentWithArtWork = TComment &
+  Pick<TUser, 'fullName' | 'avatarUrl'> &
+  Pick<TArtWork, 'name'>;
+
+export type TLike = {
+  id: string;
+  authorId: string;
+  workId: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type TLikeWithUserArtWork = TLike &
+  Pick<TUser, 'fullName' | 'avatarUrl'> &
+  Pick<TArtWork, 'name'>;

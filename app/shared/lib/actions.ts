@@ -5,10 +5,11 @@ import { auth, signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
 
 import sql from '@/app/shared/lib/db';
-import { TArtWork, TComment, TUser } from '../types';
+import { TComment, TUser } from '../types';
 import z from 'zod';
 import bcrypt from 'bcrypt';
 import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 
 export async function getUser(email: string) {
   try {
@@ -211,5 +212,15 @@ export const createWork = async (formData: FormData) => {
   } catch (error) {
     console.error('createWork error', error);
     throw error;
+  }
+};
+
+export const deleteComment = async (id: number) => {
+  try {
+    await sql`DELETE FROM "Comment" WHERE id = ${id}`;
+    revalidatePath('/admin');
+  } catch (error) {
+    console.error('Ошибка при удалении комментария:', error);
+    throw new Error('Не удалось удалить комментарий');
   }
 };

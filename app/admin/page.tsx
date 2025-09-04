@@ -1,7 +1,8 @@
 import { auth } from '@/auth';
-import LoginForm from '../shared/ui/forms/LoginForm';
 import { Suspense } from 'react';
 import { Manager } from '../shared/ui/Manager';
+import AdminStats from '../shared/ui/AdminStats/ui/AdminStats';
+import { AdminStatsSkeleton } from '../shared/ui/Skeletons/AdminStatsSkeleton';
 
 export default async function LoginPage() {
   const session = await auth();
@@ -14,8 +15,9 @@ export default async function LoginPage() {
         <div>
           <div className="flex flex-col items-center gap-4 p-4 w-full bg-block">
             <h1 className="text-2xl mb-4">Панель администратора</h1>
-
-            <AdminStats />
+            <Suspense fallback={<AdminStatsSkeleton />}>
+              <AdminStats session={session} isAdmin={isAdmin} />
+            </Suspense>
 
             {isAdmin && (
               <div className="mt-6">
@@ -29,7 +31,3 @@ export default async function LoginPage() {
     </main>
   );
 }
-
-const AdminStats = () => {
-  return <p>Статистика</p>;
-};

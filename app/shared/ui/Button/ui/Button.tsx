@@ -7,8 +7,8 @@ import {
 } from 'react';
 
 interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  icon: ReactElement<HTMLAttributes<HTMLElement>>;
   label: string;
+  icon: ReactElement<HTMLAttributes<HTMLElement>>;
   variant?: 'primary' | 'secondary';
   size?: 'small' | 'medium' | 'large';
   className?: string;

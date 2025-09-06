@@ -93,7 +93,10 @@ export default function ManagerForm() {
             )}
           </div>
         </div>
-        <button className="mt-4 w-full bg-marshmallow-400 p-2 rounded-2xl">
+        <button
+          className="mt-4 w-full bg-marshmallow-400 p-2 rounded-2xl"
+          aria-disabled={isPending}
+        >
           Сохранить
         </button>
         <div

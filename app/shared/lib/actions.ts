@@ -224,3 +224,39 @@ export const deleteComment = async (id: number) => {
     throw new Error('Не удалось удалить комментарий');
   }
 };
+
+export const changeAvatar = async (formData: FormData) => {
+  try {
+    const parsedData = z
+      .object({
+        userId: z.string(),
+        avatar: z.instanceof(File),
+      })
+      .safeParse({
+        userId: formData.get('userId'),
+        avatar: formData.get('avatar'),
+      });
+
+    if (!parsedData.success) {
+      throw new Error('Ошибка валидации формы');
+    }
+
+    const avatarFile = parsedData.data.avatar as File;
+
+    const blob = await put(avatarFile.name, avatarFile, { access: 'public' });
+    const avatarUrl = blob.url;
+
+    await sql`
+      UPDATE "User" SET "avatarUrl" = ${avatarUrl}, "updatedAt" = NOW()
+      WHERE id = ${parsedData.data.userId}
+    `;
+
+    return {
+      success: true,
+      message: 'Новый аватар успешно сохранена',
+    };
+  } catch (error) {
+    console.error('Ошибка при загрузки нового аватара', error);
+    throw new Error();
+  }
+};

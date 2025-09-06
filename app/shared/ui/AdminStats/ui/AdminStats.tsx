@@ -1,17 +1,14 @@
 import { getUserComments, getUserLikes } from '@/app/shared/lib/data';
-import { Session } from 'next-auth';
+
 import { CommentsStatsList } from './CommentsStatsList';
 import { LikesStatsList } from './LikesStatsList';
+import { auth } from '@/auth';
 
-type TAdminStatsProps = {
-  session: Session | null;
-  isAdmin: boolean;
-};
+export default async function AdminStats() {
+  const session = await auth();
 
-export default async function AdminStats({
-  session,
-  isAdmin,
-}: TAdminStatsProps) {
+  const isAdmin = session?.user.role === 'ADMIN';
+
   const userId = session?.user.id;
 
   const comments = await getUserComments(isAdmin ? '' : userId);

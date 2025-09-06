@@ -1,6 +1,4 @@
 import { TLikeWithUserArtWork } from '@/app/shared/types';
-import { Button } from '../../Button';
-import { Trash2 } from 'lucide-react';
 import { formatShortData } from '@/app/shared/lib/common';
 
 type TLikeStatsCardProps = {

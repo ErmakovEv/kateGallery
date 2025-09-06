@@ -26,7 +26,7 @@ function ButtonNavbar({ session }: { session: Session | null }) {
   if (session?.user)
     return (
       <Link href={'/admin'}>
-        <Avatar />
+        <Avatar src={session.user.avatarUrl} />
       </Link>
     );
 

@@ -15,48 +15,46 @@ export default function LoginForm() {
 
   return (
     <form action={formAction}>
-      <div className="w-full ">
-        <div className="flex flex-col items-center justify-center bg-marshmallow-200 padding border-10 border-marshmallow-400 rounded-2xl">
-          <div>
-            <label htmlFor="email">E-Mail</label>
-            <div className="relative">
-              <input
-                type="email"
-                name="email"
-                required
-                placeholder="Введите email"
-                className="border-b border-marshmallow-400"
-              />
-            </div>
+      <div className="flex flex-col items-center justify-center">
+        <div className="w-full">
+          <label htmlFor="email">E-Mail</label>
+          <div className="relative">
+            <input
+              type="email"
+              name="email"
+              required
+              placeholder="Введите email"
+              className="w-full border-b border-marshmallow-400 "
+            />
           </div>
-          <div>
-            <label htmlFor="password">Пароль</label>
-            <div className="relative">
-              <input
-                type="password"
-                name="password"
-                required
-                placeholder="Введите пароль"
-                className="border-b border-marshmallow-400"
-              />
-            </div>
+        </div>
+        <div className="w-full">
+          <label htmlFor="password">Пароль</label>
+          <div className="relative">
+            <input
+              type="password"
+              name="password"
+              required
+              placeholder="Введите пароль"
+              className="w-full border-b border-marshmallow-400"
+            />
           </div>
-          <input type="hidden" name="redirectTo" value={callbackUrl} />
-          <button
-            className="mt-4 w-full bg-marshmallow-400 p-2 rounded-2xl"
-            aria-disabled={isPending}
-          >
-            Войти
-          </button>
-          <div
-            className="flex h-8 items-end space-x-1"
-            aria-live="polite"
-            aria-atomic="true"
-          >
-            {errorMessage && (
-              <p className="text-sm text-red-500">{errorMessage}</p>
-            )}
-          </div>
+        </div>
+        <input type="hidden" name="redirectTo" value={callbackUrl} />
+        <button
+          className="mt-4 w-full bg-marshmallow-400 p-2 rounded-2xl"
+          aria-disabled={isPending}
+        >
+          Войти
+        </button>
+        <div
+          className="flex h-8 items-end space-x-1"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          {errorMessage && (
+            <p className="text-sm text-red-500">{errorMessage}</p>
+          )}
         </div>
       </div>
     </form>

@@ -21,3 +21,11 @@ export const formatShortData = (date: Date) => {
 
   return date.toLocaleString('ru', options);
 };
+
+export function generateTempPassword(length = 10) {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz123456789';
+  return Array.from(
+    { length },
+    () => chars[Math.floor(Math.random() * chars.length)]
+  ).join('');
+}

@@ -10,6 +10,43 @@ import z from 'zod';
 import bcrypt from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
+import { generateTempPassword } from './common';
+
+import nodemailer from 'nodemailer';
+
+export async function sendEmail({
+  to,
+  subject,
+  text,
+}: {
+  to: string;
+  subject: string;
+  text: string;
+}) {
+  const transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: Number(process.env.SMTP_PORT),
+    secure: process.env.SMTP_SECURE === 'true',
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
+    },
+  });
+
+  try {
+    await transporter.sendMail({
+      from: `"Галерея Катюши" <ej-88@ya.ru>`,
+      to,
+      subject,
+      text,
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.error('Ошибка отправки письма:', error);
+    return { success: false, error: 'Ошибка отправки' };
+  }
+}
 
 export async function getUser(email: string) {
   try {
@@ -61,6 +98,7 @@ export async function authenticate(
     throw error;
   }
 }
+
 export const sendComment = async (
   prevState: string | undefined,
   formData: FormData
@@ -260,3 +298,41 @@ export const changeAvatar = async (formData: FormData) => {
     throw new Error();
   }
 };
+
+export async function fogotPassword(
+  prevState: string | undefined,
+  formData: FormData
+) {
+  try {
+    const parsedData = z.object({ email: z.string() }).safeParse({
+      email: formData.get('email'),
+    });
+    if (!parsedData.success) {
+      throw new Error('Ошибка валидации формы');
+    }
+
+    const user = await sql<
+      TUser[]
+    >`SELECT * FROM "User" WHERE email = ${parsedData.data.email}`;
+
+    const tempPassword = generateTempPassword();
+    const hashed = await bcrypt.hash(tempPassword, 10);
+
+    await sql`
+    UPDATE "User" SET password = ${hashed}, "updatedAt" = NOW()
+    WHERE email = ${user[0].email}
+  `;
+
+    const a = await sendEmail({
+      to: user[0].email,
+      subject: 'Временный пароль для входа',
+      text: `Ваш временный пароль: ${tempPassword}`,
+    });
+
+    console.log('a', a);
+    return '123';
+  } catch (error) {
+    console.error(error);
+    throw new Error();
+  }
+}

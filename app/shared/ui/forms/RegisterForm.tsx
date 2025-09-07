@@ -3,6 +3,8 @@
 import { useSearchParams } from 'next/navigation';
 import { useActionState } from 'react';
 import { registartion } from '../../lib/actions';
+import { Button } from '../Button';
+import { Baby } from 'lucide-react';
 
 export default function RegisterForm() {
   const searchParams = useSearchParams();
@@ -51,9 +53,13 @@ export default function RegisterForm() {
             </div>
           </div>
           <input type="hidden" name="redirectTo" value={callbackUrl} />
-          <button className="mt-4 w-full" aria-disabled={isPending}>
-            Зарегистрироваться
-          </button>
+          <Button
+            aria-disabled={isPending}
+            label={'Зарегистрироваться'}
+            icon={<Baby />}
+            size="small"
+          />
+
           <div
             className="flex h-8 items-end space-x-1"
             aria-live="polite"

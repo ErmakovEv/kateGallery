@@ -323,14 +323,13 @@ export async function fogotPassword(
     WHERE email = ${user[0].email}
   `;
 
-    const a = await sendEmail({
+    await sendEmail({
       to: user[0].email,
       subject: 'Временный пароль для входа',
       text: `Ваш временный пароль: ${tempPassword}`,
     });
 
-    console.log('a', a);
-    return '123';
+    return 'Мы отправили новый пароль на указанный почтовый ящик';
   } catch (error) {
     console.error(error);
     throw new Error();

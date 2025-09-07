@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
 import { useActionState, useRef, useState } from 'react';
 import { createWork } from '../../lib/actions';
 

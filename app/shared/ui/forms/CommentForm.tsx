@@ -38,6 +38,8 @@ export default function CommentForm({
     }
   };
 
+  console.log(authorId);
+
   return (
     <form action={formAction}>
       <input type="hidden" name="workId" value={workId} />
@@ -56,10 +58,11 @@ export default function CommentForm({
         </div>
         <div className="flex justify-end">
           <Button
-            aria-disabled={isPending}
+            aria-disabled={!authorId || isPending}
             label="Отправить"
             icon={<Send />}
             variant="secondary"
+            disabled={!authorId}
           />
         </div>
 

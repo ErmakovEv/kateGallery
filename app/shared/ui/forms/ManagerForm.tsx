@@ -6,11 +6,10 @@ import { createWork } from '../../lib/actions';
 
 export default function ManagerForm() {
   const [errorMessage, formAction, isPending] = useActionState<
-    undefined,
+    string | undefined,
     FormData
   >(async (_prevState, formData) => {
-    await createWork(formData);
-    return undefined;
+    return await createWork(formData);
   }, undefined);
 
   const fileInputRef = useRef<HTMLInputElement>(null);

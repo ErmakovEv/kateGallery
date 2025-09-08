@@ -236,17 +236,13 @@ export const createWork = async (formData: FormData) => {
       imageUrls.push(blob.url);
     }
 
-    const newWork = await sql`
+    await sql`
       INSERT INTO "ArtWork" ("imageUrls", "categoryId", "description", "name", "year", "createdAt", "updatedAt")
       VALUES (${imageUrls}, ${categoryId}, ${description}, ${name}, ${year}, NOW(), NOW())
       RETURNING *;
     `;
 
-    return {
-      success: true,
-      data: newWork,
-      message: 'Работа успешно сохранена',
-    };
+    return 'Работа успешно сохранена';
   } catch (error) {
     console.error('createWork error', error);
     throw error;

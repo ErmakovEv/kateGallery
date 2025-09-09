@@ -6,6 +6,7 @@ import { MessageSquareHeart } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ButtonLike } from '../../ButtonLike';
+import { CommentIcon } from '@/app/shared/CommentIcon/ui/CommentIcon';
 
 export type TArtWorkCardProps = {
   id: number;
@@ -42,30 +43,29 @@ export function ArtWorkCard(props: TArtWorkCardProps) {
   });
 
   return (
-    <div className="flex flex-col lg:flex-row justify-center p-4">
+    <div className="flex flex-col lg:flex-row justify-center m-4 border-16 border-cotton-500 rounded-3xl">
       <div className="w-full">
         <Image
           src={imageUrl || '/card.jpg'}
           alt={description || 'рисунок'}
-          className="object-cover"
+          className="object-cover block w-full"
           width={1000}
           height={600}
         />
       </div>
 
-      <div className="w-full lg:w-1/3 p-4 block-bg ">
+      <div className="w-full lg:w-1/3 p-4 block-bg">
         <div className="lg:sticky lg:top-10">
           <Link href={`/${id}?${params.toString()}`}>
-            <p className="text-xl text-white-400">{name}</p>
+            <p className="text-3xl text-white-400 font-kablammo text-center">
+              {name}
+            </p>
           </Link>
           <p className="text-marshmallow-400">{description}</p>
           <p className="text-marshmallow-400">{categoryName}</p>
           <div className="flex gap-3">
             <ButtonLike workId={id} session={session} likesCount={likesCount} />
-            <div className="flex gap-1">
-              <MessageSquareHeart size={64} color="#b0a0a0" />
-              <span>{commentsCount}</span>
-            </div>
+            {commentsCount && <CommentIcon commentsCount={commentsCount} />}
           </div>
         </div>
       </div>

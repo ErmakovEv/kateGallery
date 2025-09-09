@@ -33,7 +33,7 @@ export const ButtonLike = ({
   };
 
   return (
-    <div className="flex gap-1">
+    <div className="flex gap-1 relative">
       <button
         onClick={likeHandler}
         disabled={!session?.user}
@@ -55,7 +55,11 @@ export const ButtonLike = ({
           fill={isLiked ? 'currentColor' : 'none'}
         />
       </button>
-      {hasCount && <span>{likes}</span>}
+      {hasCount && (
+        <span className=" absolute right-[-5px] bg-red-600 text-white text-xs font-bold rounded-full h-5 min-w-5 flex items-center justify-center px-1">
+          {likes}
+        </span>
+      )}
     </div>
   );
 };

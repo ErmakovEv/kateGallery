@@ -1,12 +1,11 @@
 'use client';
 
 import { Session } from 'next-auth';
-import { MessageSquareHeart } from 'lucide-react';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import { ButtonLike } from '../../ButtonLike';
 import { CommentIcon } from '@/app/shared/CommentIcon/ui/CommentIcon';
+import { TransitionLink } from '@/app/shared/utils/TransitionLink';
 
 export type TArtWorkCardProps = {
   id: number;
@@ -56,11 +55,11 @@ export function ArtWorkCard(props: TArtWorkCardProps) {
 
       <div className="w-full lg:w-1/3 p-4 block-bg">
         <div className="lg:sticky lg:top-10">
-          <Link href={`/${id}?${params.toString()}`}>
+          <TransitionLink href={`/${id}?${params.toString()}`}>
             <p className="text-3xl text-white-400 font-kablammo text-center">
               {name}
             </p>
-          </Link>
+          </TransitionLink>
           <p className="text-marshmallow-400">{description}</p>
           <p className="text-marshmallow-400">{categoryName}</p>
           <div className="flex gap-3">

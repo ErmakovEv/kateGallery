@@ -1,7 +1,7 @@
 import { ImageUp, Settings, Sparkles } from 'lucide-react';
 import { Button } from '../../Button';
-import Link from 'next/link';
 import { auth } from '@/auth';
+import { TransitionLink } from '@/app/shared/utils/TransitionLink';
 
 export const AdminNavbar = async () => {
   const session = await auth();
@@ -14,20 +14,20 @@ export const AdminNavbar = async () => {
         <h1 className="text-2xl mb-4">Панель администратора</h1>
       </div>
       <div className="flex gap-2">
-        <Link href="/admin">
+        <TransitionLink href="/admin">
           <Button label={'Ваша статистика'} icon={<Sparkles />} size="small" />
-        </Link>
-        <Link href="/admin/settings">
+        </TransitionLink>
+        <TransitionLink href="/admin/settings">
           <Button
             label={'Настройки аккаунта'}
             icon={<Settings />}
             size="small"
           />
-        </Link>
+        </TransitionLink>
         {isAdmin && (
-          <Link href="/admin/new">
+          <TransitionLink href="/admin/new">
             <Button label={'Новая работа'} icon={<ImageUp />} size="small" />
-          </Link>
+          </TransitionLink>
         )}
       </div>
     </div>

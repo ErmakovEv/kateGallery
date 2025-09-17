@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { kablammo, inter, balsamiqSans } from './fonts';
 import { Navbar } from './shared/ui/navbar';
+import { CandyTransitionOverlay } from './shared/ui/CandyTransition/ui/CandyTransitionOverlay';
 
 export const metadata: Metadata = {
   title: 'Kate-gallery',
@@ -29,6 +30,7 @@ export default function RootLayout({
       <body
         className={`${balsamiqSans.variable} ${inter.variable} ${kablammo.variable} antialiased`}
       >
+        <CandyTransitionOverlay />
         <div className="relative">
           <div className="absolute inset-0 bg-[url('/bg3.jpg')] bg-repeat bg-[length:50%] bg-top opacity-80"></div>
           <div className="relative z-10">

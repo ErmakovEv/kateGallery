@@ -1,12 +1,13 @@
 'use client';
 
 import { Session } from 'next-auth';
-import Link from 'next/link';
+
 import React from 'react';
 import Avatar from '../Avatar/Avatar';
 import { usePathname } from 'next/navigation';
 import { LogOut } from 'lucide-react';
 import { logoutHandler } from '../../lib/actions';
+import { TransitionLink } from '../../utils/TransitionLink';
 
 function ButtonNavbar({ session }: { session: Session | null }) {
   const pathname = usePathname();
@@ -25,17 +26,17 @@ function ButtonNavbar({ session }: { session: Session | null }) {
 
   if (session?.user)
     return (
-      <Link href={'/admin'}>
+      <TransitionLink href={'/admin'}>
         <Avatar src={session.user.avatarUrl || '/panda.svg'} />
-      </Link>
+      </TransitionLink>
     );
 
   return (
     <button className="w-[100px] h-[100px] py-4 bg-white rounded-full text-white text-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all duration-300 border-2 border-white relative overflow-hidden">
-      <Link href="/login">
+      <TransitionLink href="/login">
         <span className="relative z-10 text-2xl text-cotton-400">Войти 🌈</span>
         <div className="absolute inset-0 bg-rainbow opacity-30"></div>
-      </Link>
+      </TransitionLink>
     </button>
   );
 }

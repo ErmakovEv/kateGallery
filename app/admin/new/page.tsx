@@ -10,7 +10,7 @@ const NewPage = async () => {
   if (!isAdmin) redirect('/admin');
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <h2 className="text-xl mb-2">Управление работами</h2>
       <Manager />
     </div>

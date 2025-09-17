@@ -29,3 +29,6 @@ export function generateTempPassword(length = 10) {
     () => chars[Math.floor(Math.random() * chars.length)]
   ).join('');
 }
+
+export const sleep = async (ms: number) =>
+  await new Promise((res) => setTimeout(res, ms));

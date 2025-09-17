@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useActionState, useRef, useState } from 'react';
 import { createWork } from '../../lib/actions';
+import { Input } from '../Input';
 
 export default function ManagerForm() {
   const [errorMessage, formAction, isPending] = useActionState<
@@ -24,15 +25,15 @@ export default function ManagerForm() {
 
   return (
     <form action={formAction} encType={'multipart/form-data'}>
-      <div className="w-full ">
-        <div className="flex flex-col items-center justify-center bg-marshmallow-200 padding border-10 border-marshmallow-400 rounded-2xl">
+      <div className="max-w-sm flex flex-col items-center">
+        <div className="flex flex-col items-center justify-center bg-marshmallow-200 padding border-10 border-marshmallow-400 rounded-2xl ">
           <div>
             <label htmlFor="email">Название работы</label>
             <div className="relative">
-              <input
+              <Input
                 name="name"
                 required
-                placeholder="Введите название"
+                label="Введите название"
                 className="border-b border-marshmallow-400"
               />
             </div>

@@ -9,6 +9,22 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-balsamiq-sans), sans-serif;
+  transition-property: all;
+  transition-timing-function: ease-in-out;
+  transition-duration: 500ms;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 10s linear infinite;
 }
 
 @theme {
@@ -149,6 +165,13 @@ body {
 }
 .icon-size-large {
   @apply h-8 w-8;
+}
+
+.page-transition {
+  opacity: 0;
+  background-color: black;
+  transform: translateY(40px);
+  filter: blur(12px);
 }
 
 @utility padding {

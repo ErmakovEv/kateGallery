@@ -4,8 +4,8 @@ import { Session } from 'next-auth';
 
 import Image from 'next/image';
 import { ButtonLike } from '../../ButtonLike';
-import { CommentIcon } from '@/app/shared/CommentIcon/ui/CommentIcon';
 import { TransitionLink } from '@/app/shared/utils/TransitionLink';
+import { ButtonComment } from '../../ButtonComment';
 
 export type TArtWorkCardProps = {
   id: number;
@@ -62,10 +62,14 @@ export function ArtWorkCard(props: TArtWorkCardProps) {
           </TransitionLink>
           <p className="text-marshmallow-400">{description}</p>
           <p className="text-marshmallow-400">{categoryName}</p>
-          <div className="flex gap-3">
-            <ButtonLike workId={id} session={session} likesCount={likesCount} />
-            {commentsCount && <CommentIcon commentsCount={commentsCount} />}
-          </div>
+
+          <ButtonLike workId={id} session={session} likesCount={likesCount} />
+          <ButtonComment
+            id={id}
+            params={params}
+            commentsCount={commentsCount}
+            session={session}
+          />
         </div>
       </div>
     </div>

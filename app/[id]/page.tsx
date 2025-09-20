@@ -28,29 +28,30 @@ export default async function Page(props: {
       <div className="max-container">
         <div className="h-full flex flex-col items-center gap-4 p-4 w-full bg-block">
           <div className="w-full max-w-[1000px] flex flex-col ">
-            <div className="flex justify-center items-center">
-              <Image
-                src={imageUrl || '/card.jpg'}
-                alt={'рисунок'}
-                className="object-contain"
-                width={1000}
-                height={600}
-              />
+            <div className="relative">
+              <div className="flex justify-center items-center">
+                <Image
+                  src={imageUrl || '/card.jpg'}
+                  alt={'рисунок'}
+                  className="object-contain"
+                  width={1000}
+                  height={600}
+                />
+              </div>
+              <div className="absolute bottom-0 right-0">
+                {id && (
+                  <ButtonLike
+                    workId={+id}
+                    session={session}
+                    likesCount={likesCount ? +likesCount : 0}
+                    size={20}
+                  />
+                )}
+              </div>
             </div>
             <div className="w-full p-4 gap-6 flex flex-col items-center block-bg ">
               <div className="w-full flex items-center justify-between">
                 <p className="text-xl text-white-400">{name}</p>
-                <div>
-                  {id && (
-                    <ButtonLike
-                      workId={+id}
-                      session={session}
-                      likesCount={likesCount ? +likesCount : 0}
-                      size={20}
-                      hasCount={false}
-                    />
-                  )}
-                </div>
               </div>
               <p className="w-full text-marshmallow-400">{description}</p>
               <div className="w-full flex justify-end">

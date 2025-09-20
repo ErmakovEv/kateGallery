@@ -1,15 +1,16 @@
 'use client';
 
-import { likeAddHandler, likeDelHandler } from '@/app/shared/lib/actions';
-import { Heart } from 'lucide-react';
+import { likeAddHandler } from '@/app/shared/lib/actions';
 import { Session } from 'next-auth';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+
+import Lottie, { LottieRefCurrentProps } from 'lottie-react';
+import heartAnimation from '@/public/lottieHeart.json';
 
 export const ButtonLike = ({
   workId,
   likesCount,
   session,
-  size = 64,
   hasCount = true,
 }: {
   workId: number;
@@ -20,43 +21,41 @@ export const ButtonLike = ({
 }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [likes, setLikes] = useState(likesCount ? +likesCount : 0);
+  const lottieRef = useRef<LottieRefCurrentProps | null>(null);
 
   const likeHandler = async () => {
-    if (isLiked) {
-      await likeDelHandler(workId);
-      setLikes((prev) => prev - 1);
-    } else {
-      await likeAddHandler(workId);
+    if (isLiked) return;
+    lottieRef.current?.stop();
+    lottieRef.current?.play();
+
+    await likeAddHandler(workId);
+    setTimeout(() => {
       setLikes((prev) => prev + 1);
-    }
-    setIsLiked((prev) => !prev);
+      setIsLiked((prev) => !prev);
+    }, 3000);
   };
 
   return (
-    <div className="flex gap-1 relative">
+    <div className="flex gap-1 relative justify-center">
       <button
         onClick={likeHandler}
         disabled={!session?.user}
-        className={`p-2 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 ${
-          isLiked
-            ? 'bg-red-100 hover:bg-red-200'
-            : 'bg-gray-100 hover:bg-gray-200'
-        } ${
-          !session?.user
-            ? 'opacity-50 cursor-not-allowed'
-            : 'cursor-pointer hover:scale-110'
-        }`}
+        style={{
+          width: 200,
+          height: 200,
+          cursor: 'pointer',
+          filter: isLiked || !session?.user ? 'grayscale(100%)' : 'none',
+        }}
       >
-        <Heart
-          size={size}
-          className={`transition-colors duration-200 ${
-            isLiked ? 'text-red-600 fill-current' : 'text-red-600 opacity-60'
-          }`}
-          fill={isLiked ? 'currentColor' : 'none'}
+        <Lottie
+          lottieRef={lottieRef}
+          animationData={heartAnimation}
+          loop={false}
+          autoplay={false}
         />
       </button>
       {hasCount && (
-        <span className=" absolute right-[-5px] bg-red-600 text-white text-xs font-bold rounded-full h-5 min-w-5 flex items-center justify-center px-1">
+        <span className=" absolute right-[50px] bg-cotton-500 text-white text-xs font-bold rounded-full h-5 min-w-5 flex items-center justify-center px-1">
           {likes}
         </span>
       )}
